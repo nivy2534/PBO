@@ -8,16 +8,29 @@ public class Car {
     private String nama;
     private String jenis;
     private String noPlat;
-    static boolean seat[] = new boolean[7];
+    private int qty;
+    boolean seat[][]; // apakah butuh static?
 
     public Car() {
 
     }
 
-    public Car(String nama, String jenis, String noPlat) {
+    public void setSeat() {
+        int row = (qty - 1) / 3;
+        seat = new boolean[row + 1][3];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < 3; j++) {
+                seat[i][j] = false;
+            }
+        }
+    }
+
+    public Car(String nama, String jenis, String noPlat, int qty) {
         this.nama = nama;
         this.jenis = jenis;
         this.noPlat = noPlat;
+        this.qty = qty;
+        setSeat();
     }
 
     public String getNama() {
@@ -30,5 +43,16 @@ public class Car {
 
     public String getNoPlat() {
         return noPlat;
+    }
+
+    public void availableSeat() {
+        int row = (qty - 1) / 3;
+        System.out.println("| " + (seat[0][0] ? 1 : 0) + " |");
+        for (int i = 1; i <= row; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.printf("| %s |", (seat[i][j] ? 1 : 0));
+            }
+            System.out.println();
+        }
     }
 }
