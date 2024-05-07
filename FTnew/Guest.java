@@ -12,10 +12,11 @@ public class Guest extends Customer {
     }
 
     @Override
-    public void makeOrder(String destination, String pickupAddress, String phoneNumber, LocalDate date) {
-        Order order = new Order();
-        order.generateNumberOrder();
-        order.printDetails(getFullName(), phoneNumber, destination, pickupAddress);
+    public Order makeOrder(String destination, String pickupAddress, String phoneNumber, LocalDate date, Car car) {
+        return new Order(destination, pickupAddress, phoneNumber, date, car);
+        // Order order = new Order();
+        // order.generateNumberOrder();
+        // order.printDetails(getFullName(), phoneNumber, destination, pickupAddress);
     }
 
     @Override
