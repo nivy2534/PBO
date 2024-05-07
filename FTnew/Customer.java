@@ -29,7 +29,8 @@ public abstract class Customer {
         return id;
     }
 
-    public abstract void makeOrder(String destination, String pickupAddress, String phoneNumber, LocalDate date);
+    public abstract Order makeOrder(String destination, String pickupAddress, String phoneNumber, LocalDate date,
+            Car car);
 
     public void confirmPay(int noOrder) {
         order.pay();
