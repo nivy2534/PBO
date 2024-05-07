@@ -11,6 +11,8 @@ public class Ft_copy {
     static Customer mempool[] = new Member[20];
 
     public static void main(String[] args) {
+        Car carpool[] = new Car[20];
+        setCar(carpool);
         Scanner sc = new Scanner(System.in);
         Customer customer = null;
         String firstName;
@@ -82,8 +84,29 @@ public class Ft_copy {
                                 System.out.println("Masukkan nomor HP: ");
                                 String phoneNumber = sc.nextLine();
                                 LocalDate date = LocalDate.now();
+                                System.out.println("Silahkan pilih mobil Anda : ");
+                                System.out.println("1. Avanza");
+                                System.out.println("2. Pregio");
+                                System.out.println("3. Hiace");
+                                System.out.println("Pilihan Anda : ");
+                                int choiceCar = sc.nextInt();
+                                sc.nextLine();
+                                Car car = null;
+                                switch (choiceCar) {
+                                    case 1:
+                                        car = carpool[0];
+                                        break;
+                                    case 2:
+                                        car = carpool[1];
+                                        break;
+                                    case 3:
+                                        car = carpool[2];
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 if (customer != null) {
-                                    customer.makeOrder(destination, pickupAddress, phoneNumber, date);
+                                    customer.makeOrder(destination, pickupAddress, phoneNumber, date, car);
                                 } else {
                                     System.out.println(
                                             "Silakan pilih opsi '2' atau '3' terlebih dahulu untuk membuat akun.");
@@ -167,8 +190,29 @@ public class Ft_copy {
                             System.out.println("Masukkan nomor HP: ");
                             String phoneNumber = sc.nextLine();
                             LocalDate date = LocalDate.now();
+                            System.out.println("Silahkan pilih mobil Anda : ");
+                            System.out.println("1. Avanza");
+                            System.out.println("2. Pregio");
+                            System.out.println("3. Hiace");
+                            System.out.println("Pilihan Anda : ");
+                            int choiceCar = sc.nextInt();
+                            sc.nextLine();
+                            Car car = null;
+                            switch (choiceCar) {
+                                case 1:
+                                    car = carpool[0];
+                                    break;
+                                case 2:
+                                    car = carpool[1];
+                                    break;
+                                case 3:
+                                    car = carpool[2];
+                                    break;
+                                default:
+                                    break;
+                            }
                             if (customer != null) {
-                                customer.makeOrder(destination, pickupAddress, phoneNumber, date);
+                                customer.makeOrder(destination, pickupAddress, phoneNumber, date, car);
                             } else {
                                 System.out
                                         .println("Silakan pilih opsi '2' atau '3' terlebih dahulu untuk membuat akun.");
@@ -226,5 +270,11 @@ public class Ft_copy {
             }
         }
         return cek;
+    }
+
+    static void setCar(Car carpool[]) {
+        carpool[0] = new Car("Avanza", "Mobil Sedang", "N 1234 ABC", 7);
+        carpool[1] = new Car("Pregio", "Mobil Sedang", "N 5678 DEF", 10);
+        carpool[2] = new Car("Hiace", "Mobil besar", "N 9101 GHI", 15);
     }
 }
