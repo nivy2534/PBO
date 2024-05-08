@@ -105,13 +105,33 @@ public class Ft_copy {
                                 // default:
                                 // break;
                                 // }
-                                Car car = new Car("Avanza", "Mobil Sedang", "N 1234 ABC", 7);
+                                Car car = new Car("Avanza", "Putih", "N 1234 O", 7);
                                 if (customer != null) {
                                     customer.makeOrder(destination, pickupAddress, phoneNumber, date, car);
                                 } else {
                                     System.out.println(
                                             "Silakan pilih opsi '2' atau '3' terlebih dahulu untuk membuat akun.");
                                 }
+                                Order order = new Order(destination, pickupAddress, phoneNumber, date, car);
+                                order.printDetails(customer.getFullName(), phoneNumber, destination, pickupAddress);
+                                System.out.println("==============================");
+                                System.out.println("Nama Pemesan: " + customer.getFullName());
+                                System.out.println("Nomor HP: " + phoneNumber);
+                                System.out.println("KTP: " + customer.getId());
+                                System.out.println("Alamat Penjemputan: " + pickupAddress);
+                                System.out.println("Mobil: " + car.getNama() + " " + car.getJenis() + " Plat " + car.getNoPlat());
+                                System.out.print("Seat: ");
+                                for (int i = 0; i < car.seat.length; i++) {
+                                    for (int j = 0; j < car.seat[i].length; j++) {
+                                        if (car.seat[i][j]) {
+                                            System.out.print("(" + (i * 3 + j + 1) + ") ");
+                                        }
+                                    }
+                                }
+                                System.out.println();
+                                System.out.println("Nomor Pesanan: " + order.noOrder);
+                                System.out.println("==============================");
+                                System.out.println("Terima kasih telah menggunakan layanan kami.");
                                 break;
                             case 0:
                                 System.out.println("Terima kasih telah menggunakan layanan kami.");
@@ -191,14 +211,31 @@ public class Ft_copy {
                             System.out.println("Masukkan nomor HP: ");
                             String phoneNumber = sc.nextLine();
                             LocalDate date = LocalDate.now();
-                            Car car = new Car("Avanza", "Mobil Sedang", "N 1234 ABC", 7);
-                            ;
+                            Car car = new Car("Avanza", "Putih", "N 1234 ABC", 7);
                             if (customer != null) {
                                 customer.makeOrder(destination, pickupAddress, phoneNumber, date, car);
                             } else {
-                                System.out
-                                        .println("Silakan pilih opsi '2' atau '3' terlebih dahulu untuk membuat akun.");
+                                System.out.println("Silakan pilih opsi '2' atau '3' terlebih dahulu untuk membuat akun.");
                             }
+                            Order order = new Order(destination, pickupAddress, phoneNumber, date, car);
+                            System.out.println("==============================");
+                            System.out.println("Nama Pemesan: " + customer.getFullName());
+                            System.out.println("Nomor HP: " + phoneNumber);
+                            System.out.println("KTP: " + customer.getId());
+                            System.out.println("Alamat Penjemputan: " + pickupAddress);
+                            System.out.println("Mobil: " + car.getNama() + " " + car.getJenis() + " Plat " + car.getNoPlat());
+                            System.out.print("Seat: ");
+                            for (int i = 0; i < car.seat.length; i++) {
+                                for (int j = 0; j < car.seat[i].length; j++) {
+                                    if (car.seat[i][j]) {
+                                        System.out.print("(" + (i * 3 + j + 1) + ") ");
+                                    }
+                                }
+                            }
+                            System.out.println();
+                            System.out.println("Nomor Pesanan: " + order.noOrder);
+                            System.out.println("==============================");
+                            System.out.println("Terima kasih telah menggunakan layanan kami.");
                             break;
                         case 0:
                             System.out.println("Terima kasih telah menggunakan layanan kami.");
