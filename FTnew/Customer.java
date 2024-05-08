@@ -44,6 +44,18 @@ public abstract class Customer {
             switch (choice) {
                 case "y":
                     orderPool[index].pay();
+                    orderPool[index].orderStatus = Status.SUCCESSFULL;
+                    if (orderPool[index].orderStatus == Status.SUCCESSFULL) {
+                        if (orderIndex == 1) {
+                            orderIndex = 0;
+                        } else {
+                            for (int i = 0; i < orderIndex; i++) {
+                                orderPool[i] = orderPool[i + 1];
+                            }
+                            orderIndex--;
+                        }
+
+                    }
                     break;
                 case "n":
 
