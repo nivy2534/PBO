@@ -5,6 +5,7 @@
 package FTnew;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Guest extends Customer {
     public Guest(String firstName, String lastName, String id) {
@@ -12,8 +13,9 @@ public class Guest extends Customer {
     }
 
     @Override
-    public Order makeOrder(String destination, String pickupAddress, String phoneNumber, LocalDate date, Car car) {
-        return new Order(destination, pickupAddress, phoneNumber, date, car);
+    public void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date, Car car) {
+        super.orderPool[orderIndex] = new Order(destination, pickupAddress, phoneNumber, date, car);
+        orderIndex++;
         // Order order = new Order();
         // order.generateNumberOrder();
         // order.printDetails(getFullName(), phoneNumber, destination, pickupAddress);
@@ -21,7 +23,6 @@ public class Guest extends Customer {
 
     @Override
     public String getFullName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return super.getFullName();
     }
 }
