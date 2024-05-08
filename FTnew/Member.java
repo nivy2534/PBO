@@ -33,8 +33,9 @@ public class Member extends Customer {
         return userid;
     }
 
-    public Order makeOrder(String destination, String pickupAddress, String phoneNumber, LocalDate date, Car car) {
-        return new Order(destination, pickupAddress, phoneNumber, date, car);
+    public void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date, Car car) {
+        orderPool[orderIndex] = new Order(destination, pickupAddress, phoneNumber, date, car);
+        orderIndex++;
     }
 
     public String getFullName() {
