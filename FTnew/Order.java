@@ -18,7 +18,7 @@ public class Order {
     String destination, pickupAddress, phoneNumber;
     Date departureTime;
     Car car;
-    //Customer customer;
+    // Customer customer;
 
     public Order(String destination, String pickupAddress, String phoneNumber, Date departureTime, Car car) {
         generateNumberOrder();
@@ -40,7 +40,6 @@ public class Order {
         this.dateOrder = today;
         pay();
     }
-
 
     public void printDetails(Customer customer) {
         System.out.printf("%-53s%s\n", "No. Order :", noOrder);
