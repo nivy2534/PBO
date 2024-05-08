@@ -113,7 +113,6 @@ public class Ft_copy {
                                             "Silakan pilih opsi '2' atau '3' terlebih dahulu untuk membuat akun.");
                                 }
                                 Order order = new Order(destination, pickupAddress, phoneNumber, date, car);
-                                order.printDetails(customer.getFullName(), phoneNumber, destination, pickupAddress);
                                 System.out.println("==============================");
                                 System.out.println("Nama Pemesan: " + customer.getFullName());
                                 System.out.println("Nomor HP: " + phoneNumber);
