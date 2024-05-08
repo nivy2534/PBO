@@ -43,7 +43,7 @@ public abstract class Customer {
             String choice = sc.nextLine();
             switch (choice) {
                 case "y":
-                    order.pay();
+                    orderPool[index].pay();
                     break;
                 case "n":
 
@@ -51,7 +51,7 @@ public abstract class Customer {
                 default:
                     break;
             }
-        }else{
+        } else {
             System.out.println("Pesanan Telah dibayar");
         }
     }
