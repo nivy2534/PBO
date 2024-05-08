@@ -6,8 +6,12 @@ package FTnew;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Date;
+import java.util.Scanner;
 
 public abstract class Customer {
+    static Order orderPool[] = new Order[20];
+    static int orderIndex = 0;
     private String fullName;
     private String firstName;
     private String lastName;
@@ -29,11 +33,27 @@ public abstract class Customer {
         return id;
     }
 
-    public abstract Order makeOrder(String destination, String pickupAddress, String phoneNumber, LocalDate date,
+    public abstract void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date,
             Car car);
 
-    public void confirmPay(int noOrder) {
-        order.pay();
+    public void confirmPay(int noOrder, int index) {
+        Scanner sc = new Scanner(System.in);
+        if (orderPool[index].orderStatus == Status.UNPAID) {
+            System.out.println("Anda yakin untuk checkout? : (y/n)");
+            String choice = sc.nextLine();
+            switch (choice) {
+                case "y":
+                    order.pay();
+                    break;
+                case "n":
+
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            System.out.println("Pesanan Telah dibayar");
+        }
     }
 
     private void setFullName() {
@@ -42,5 +62,13 @@ public abstract class Customer {
 
     public int getAccountAge() {
         return -1;
+    }
+
+    public void printOrder() {
+        for (int i = 0; i < orderIndex; i++) {
+            System.out.println((i + 1) + ". " + orderPool[i].destination + " - " + orderPool[i].totalPrice);
+            System.out.printf("   %s\n", "Tanggal Keberangkatan : " + orderPool[i].departureTime);
+            System.out.printf("   %s\n", "Nomor pesanan : " + orderPool[i].noOrder);
+        }
     }
 }
