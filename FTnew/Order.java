@@ -91,4 +91,7 @@ public class Order {
             System.out.println("Pesanan telah dibayar pada tanggal: " + dateOrder);
         }
     }
+    public double getTotalPrice() {
+        return totalPrice;
+    }
 }
