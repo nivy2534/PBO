@@ -13,7 +13,6 @@ import FT.Rent;
 
 public class Ft_copy {
     static Customer mempool[] = new Member[20];
-    static Order orderPool[] = new Order[20];
 
     public static void main(String[] args) {
         // Car carpool[] = new Car[20];
@@ -323,16 +322,19 @@ public class Ft_copy {
     // }
     static void checkOut(Scanner sc, Customer customer) {
         int choice;
-        if (customer != null) {
+        if (customer.orderIndex != 0) {
             do {
                 System.out.println("Pilih pesanan yang akan checkout : ");
                 customer.printOrder();
                 System.out.println("0. Exit");
                 System.out.println("Pilihan Anda : ");
                 choice = sc.nextInt();
+                if (choice == 0)
+                    break;
                 customer.orderPool[choice - 1].printDetails(customer);
+                customer.confirmPay(customer.orderPool[choice - 1].noOrder, choice - 1);
             } while (choice != 0);
-        } else {
+        } else if (customer.orderIndex == 0) {
             System.out.println("Buat pesanan terlebih dahulu");
         }
     }
