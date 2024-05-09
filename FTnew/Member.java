@@ -73,8 +73,7 @@ public class Member extends Customer {
     }
 
     public String getFullName() {
-        return super.getFullName(); // Generated from
-                                    // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return super.getFullName();
     }
 
     @Override
