@@ -36,36 +36,7 @@ public abstract class Customer {
     public abstract void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date,
             Car car, Customer customer);
 
-    public void confirmPay(int noOrder, int index) {
-        Scanner sc = new Scanner(System.in);
-        if (orderPool[index].orderStatus == Status.UNPAID) {
-            System.out.println("Anda yakin untuk checkout? : (y/n)");
-            String choice = sc.nextLine();
-            switch (choice) {
-                case "y":
-                    orderPool[index].checkOut();
-                    orderPool[index].orderStatus = Status.SUCCESSFULL;
-                    if (orderPool[index].orderStatus == Status.SUCCESSFULL) {
-                        if (orderIndex == 1) {
-                            orderIndex = 0;
-                        } else {
-                            for (int i = 0; i < orderIndex; i++) {
-                                orderPool[i] = orderPool[i + 1];
-                            }
-                            orderIndex--;
-                        }
-                    }
-                    break;
-                case "n":
-
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            System.out.println("Pesanan Telah dibayar");
-        }
-    }
+    public abstract void confirmPay(int noOrder, int index);
 
     private void setFullName() {
         this.fullName = firstName + " " + lastName;
