@@ -10,9 +10,14 @@ public class Car {
     private String noPlat;
     static private int qty;
     static boolean seat[]; // apakah butuh static? -> butuh -> tergantung tanggal
+    private int choiceqty;
 
     public Car() {
 
+    }
+
+    public int getChoiceqty() {
+        return choiceqty;
     }
 
     public static int getQty() {
@@ -79,5 +84,9 @@ public class Car {
                 }
             }
         }
+    }
+
+    public void setChoiceqty(int choiceqty) {
+        this.choiceqty = choiceqty;
     }
 }

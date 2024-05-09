@@ -122,10 +122,9 @@ public class Ft_copy {
                     String pickupAddress = sc.nextLine();
                     System.out.println("Masukkan nomor HP: ");
                     String phoneNumber = sc.nextLine();
-                    System.out.println("Masukkan tanggal keberangkatan : ");
                     Date dateDeparture;
                     SimpleDateFormat date = new SimpleDateFormat("dd/mm/yyyy");
-                    System.out.println("Masukkan tanggal Rent : (dd/mm/yyyy)");
+                    System.out.println("Masukkan tanggal keberangkatan : (dd/mm/yyyy)");
                     try {
                         String departure = sc.next();
                         dateDeparture = date.parse(departure);
@@ -136,7 +135,7 @@ public class Ft_copy {
                     System.out.println("Silahkan pilih tempat duduk Anda : ");
                     chooseSeat(car, sc);
                     if (customer != null) {
-                        customer.makeOrder(destination, pickupAddress, phoneNumber, dateDeparture, car);
+                        customer.makeOrder(destination, pickupAddress, phoneNumber, dateDeparture, car, customer);
                     } else {
                         System.out.println(
                                 "Silakan pilih opsi '2' atau '3' terlebih dahulu untuk membuat akun.");
@@ -214,10 +213,9 @@ public class Ft_copy {
                     String pickupAddress = sc.nextLine();
                     System.out.println("Masukkan nomor HP: ");
                     String phoneNumber = sc.nextLine();
-                    System.out.println("Masukkan tanggal keberangkatan : ");
                     Date dateDeparture;
                     SimpleDateFormat date = new SimpleDateFormat("dd/mm/yyyy");
-                    System.out.println("Masukkan tanggal Rent : (dd/mm/yyyy)");
+                    System.out.println("Masukkan tanggal keberangkatan : (dd/mm/yyyy)");
                     try {
                         String departure = sc.next();
                         dateDeparture = date.parse(departure);
@@ -228,7 +226,7 @@ public class Ft_copy {
                     System.out.println("Silahkan pilih tempat duduk Anda : ");
                     chooseSeat(car, sc);
                     if (customer != null) {
-                        customer.makeOrder(destination, pickupAddress, phoneNumber, dateDeparture, car);
+                        customer.makeOrder(destination, pickupAddress, phoneNumber, dateDeparture, car, customer);
                     }
                     car.printInfo();
                     break;
@@ -290,6 +288,7 @@ public class Ft_copy {
     static Car chooseSeat(Car car, Scanner sc) {
         Car tmp = car;
         int choice;
+        int choiceqty = 0;
         do {
             System.out.println("Seat tersedia : (0 tersedia, 1 tidak tersedia)");
             car.availableSeat();
@@ -300,15 +299,18 @@ public class Ft_copy {
             System.out.println("0. Exit");
             System.out.println("Pilihan Anda : ");
             choice = sc.nextInt();
-            if (choice == 0)
+            if (choice == 0) {
+                tmp.setChoiceqty(choiceqty);
                 break;
-            else if (choice > car.getQty())
+            } else if (choice > car.getQty())
                 System.out.println("Pilihan tidak tersedia");
             else {
                 if (!car.seat[choice - 1]) {
                     car.seat[choice - 1] = true;
+                    choiceqty++;
                 } else {
                     car.seat[choice - 1] = false;
+                    choiceqty--;
                 }
             }
         } while (choice != 0);
@@ -331,11 +333,18 @@ public class Ft_copy {
                 choice = sc.nextInt();
                 if (choice == 0)
                     break;
-                customer.orderPool[choice - 1].printDetails(customer);
+                customer.orderPool[choice - 1].printDetails();
                 customer.confirmPay(customer.orderPool[choice - 1].noOrder, choice - 1);
             } while (choice != 0);
         } else if (customer.orderIndex == 0) {
             System.out.println("Buat pesanan terlebih dahulu");
         }
     }
+
+    static void promoList() {
+
+    }
+    // static double price(String dest){
+
+    // }
 }

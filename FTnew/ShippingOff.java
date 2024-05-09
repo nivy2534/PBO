@@ -1,6 +1,6 @@
 package FTnew;
 
-public class ShippingOff extends Promotion {
+public class ShippingOff {
     private double shippingDiscount;
 
     public ShippingOff(String promoCode, int minPrice, double shippingDiscount) {

@@ -1,13 +1,13 @@
 package FTnew;
 
-  /*
-  ketika dipanggil, maka akan mereturn atau memberikan fungsi diskon
-  ketika inisialiasi
-  PercentOff (generate ranodm String atau kode sendiri) = new PercentOff();
-  -> (isi) double diskon
-  -> harga setelah diskon akan ada di class order
-  
-  */
+/*
+ketika dipanggil, maka akan mereturn atau memberikan fungsi diskon
+ketika inisialiasi
+PercentOff (generate ranodm String atau kode sendiri) = new PercentOff();
+-> (isi) double diskon
+-> harga setelah diskon akan ada di class order
+
+*/
 public class PercentOff extends Promotion {
     private double discountPercentage;
 
@@ -28,7 +28,6 @@ public class PercentOff extends Promotion {
         }
     }
 
-    @Override
     public int compareTo(Object o) {
         if (o instanceof PercentOff) {
             PercentOff other = (PercentOff) o;

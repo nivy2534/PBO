@@ -21,6 +21,7 @@ public class Member extends Customer {
         this.userid = makeUserID();
         this.isMember = true;
         this.password = password;
+        this.join = join.now();
     }
 
     private String makeUserID() {
@@ -33,8 +34,9 @@ public class Member extends Customer {
         return userid;
     }
 
-    public void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date, Car car) {
-        orderPool[orderIndex] = new Order(destination, pickupAddress, phoneNumber, date, car);
+    public void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date, Car car,
+            Customer customer) {
+        orderPool[orderIndex] = new Order(destination, pickupAddress, phoneNumber, date, car, customer);
         orderIndex++;
     }
 

@@ -14,9 +14,7 @@ public class Order {
     double subprice;
     double totalPrice;
     double shippingCost;
-    Promotion promo[];
     Status orderStatus;
-    Applicable applicable;
     String destination, pickupAddress, phoneNumber;
     Date departureTime;
     Car car;
@@ -53,7 +51,7 @@ public class Order {
             System.out.println();
             System.out.println("Nama: " + customer.getFullName());
             System.out.println("Nomor HP: " + phoneNumber);
-            System.out.println("Nomor pesanan: " + noOrder);
+            // System.out.println("Nomor pesanan: " + noOrder);
             System.out.println("Alamat penjemputan: " + pickupAddress);
             System.out.println("Tujuan : " + destination);
             System.out.println("Harga pesanan : " + subprice);
@@ -72,16 +70,16 @@ public class Order {
             car.printInfo();
             System.out.println("Kursi pesanan : " + car.getChoiceqty());
             System.out.println("Tujuan : " + destination);
-            System.out.println("Harga pesanan : " + subprice);
+            System.out.println("Harga pesanan : " + getTotalPrice());
             System.out.println("=============================================================");
         }
 
         // System.out.println("Mobil: Avanza putih dengan plat N 1234 O");
     }
 
-    public void applyPromo(Promotion x) {
-        this.promo = x;
-    }
+    // public void applyPromo(Promotion x) {
+    // this.promo = x;
+    // }
 
     public void pay() {
         if (orderStatus == Status.UNPAID) {
@@ -125,6 +123,6 @@ public class Order {
     }
 
     public double getTotalPrice() {
-
+        return subprice;
     }
 }

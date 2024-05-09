@@ -34,7 +34,7 @@ public abstract class Customer {
     }
 
     public abstract void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date,
-            Car car);
+            Car car, Customer customer);
 
     public void confirmPay(int noOrder, int index) {
         Scanner sc = new Scanner(System.in);
@@ -43,7 +43,7 @@ public abstract class Customer {
             String choice = sc.nextLine();
             switch (choice) {
                 case "y":
-                    orderPool[index].pay();
+                    orderPool[index].checkOut();
                     orderPool[index].orderStatus = Status.SUCCESSFULL;
                     if (orderPool[index].orderStatus == Status.SUCCESSFULL) {
                         if (orderIndex == 1) {
@@ -54,7 +54,6 @@ public abstract class Customer {
                             }
                             orderIndex--;
                         }
-
                     }
                     break;
                 case "n":

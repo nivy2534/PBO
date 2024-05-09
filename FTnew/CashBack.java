@@ -21,7 +21,6 @@ public class Cashback extends Promotion {
         return 0;
     }
 
-    @Override
     protected double calculateTotalDiscount(Order order) {
         if (isMinimumPriceEligible(order)) {
             return cashbackAmount;
