@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 
+import online_book_store.customer;
+
 public class Order {
     Scanner sc = new Scanner(System.in);
     LocalDate dateOrder;
@@ -12,15 +14,16 @@ public class Order {
     double subprice;
     double totalPrice;
     double shippingCost;
-    Promotion promo;
+    Promotion promo[];
     Status orderStatus;
     Applicable applicable;
     String destination, pickupAddress, phoneNumber;
     Date departureTime;
     Car car;
-    // Customer customer;
+    Customer customer;
 
-    public Order(String destination, String pickupAddress, String phoneNumber, Date departureTime, Car car) {
+    public Order(String destination, String pickupAddress, String phoneNumber, Date departureTime, Car car,
+            Customer customer) {
         generateNumberOrder();
         this.destination = destination;
         this.pickupAddress = pickupAddress;
@@ -28,6 +31,8 @@ public class Order {
         this.car = car;
         this.departureTime = departureTime;
         this.orderStatus = orderStatus.UNPAID;
+        this.customer = customer;
+        destinationPrice(destination);
     }
 
     public void generateNumberOrder() {
@@ -39,20 +44,38 @@ public class Order {
         LocalDate today = LocalDate.now();
         this.dateOrder = today;
         pay();
+        printDetails();
     }
 
-    public void printDetails(Customer customer) {
-        System.out.printf("%-53s%s\n", "No. Order :", noOrder);
-        System.out.printf("%-53s%s\n", "Status    :", orderStatus);
-        System.out.println("Tipe akun : " + ((customer instanceof Member) ? "Member" : "Guest"));
-        System.out.println("=============================================================");
-        System.out.println();
-        System.out.println("Nama: " + customer.getFullName());
-        System.out.println("Nomor HP: " + phoneNumber);
-        System.out.println("Nomor pesanan: " + noOrder);
-        System.out.println("Alamat penjemputan: " + pickupAddress);
-        System.out.println("Tujuan : " + destination);
-        System.out.println("=============================================================");
+    public void printDetails() {
+        if (orderStatus == Status.UNPAID) {
+            System.out.println("=============================================================");
+            System.out.println();
+            System.out.println("Nama: " + customer.getFullName());
+            System.out.println("Nomor HP: " + phoneNumber);
+            System.out.println("Nomor pesanan: " + noOrder);
+            System.out.println("Alamat penjemputan: " + pickupAddress);
+            System.out.println("Tujuan : " + destination);
+            System.out.println("Harga pesanan : " + subprice);
+            System.out.println("=============================================================");
+        } else {
+            System.out.println("Tanggal Checkout : " + dateOrder);
+            System.out.printf("%s%s\n", "No. Order : ", noOrder);
+            System.out.printf("%s%s\n", "Status    : ", orderStatus);
+            System.out.println("Tipe akun : " + ((customer instanceof Member) ? "Member" : "Guest"));
+            System.out.println("=============================================================");
+            System.out.println();
+            System.out.println("Nama: " + customer.getFullName());
+            System.out.println("Nomor HP: " + phoneNumber);
+            System.out.println("Nomor pesanan: " + noOrder);
+            System.out.println("Alamat penjemputan: " + pickupAddress);
+            car.printInfo();
+            System.out.println("Kursi pesanan : " + car.getChoiceqty());
+            System.out.println("Tujuan : " + destination);
+            System.out.println("Harga pesanan : " + subprice);
+            System.out.println("=============================================================");
+        }
+
         // System.out.println("Mobil: Avanza putih dengan plat N 1234 O");
     }
 
@@ -67,5 +90,41 @@ public class Order {
         } else {
             System.out.println("Pesanan telah dibayar pada tanggal: " + dateOrder);
         }
+    }
+
+    // public double getTotalPrice(Promotion promo){
+    // double discPrice = promo.;
+    // this.totalPrice = subprice - discPrice;
+    // return totalPrice;
+    // }
+    public void destinationPrice(String dest) {
+        double price = 0;
+        switch (dest) {
+            case "Surabaya":
+                price = 50000;
+                break;
+            case "Malang":
+                price = 25000;
+                break;
+            case "Yogyakarta":
+                price = 100000;
+                break;
+            case "Semarang":
+                price = 100000;
+                break;
+            case "Jakarta":
+                price = 150000;
+                break;
+            case "Bandung":
+                price = 150000;
+                break;
+            default:
+                break;
+        }
+        this.subprice = price * car.getChoiceqty();
+    }
+
+    public double getTotalPrice() {
+
     }
 }
