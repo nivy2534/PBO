@@ -7,22 +7,26 @@ package FTml3;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 //ini juga msh sama, cuman beda di makeOrder
 public class Guest extends Customer {
-    static ArrayList<Order> orderpool = new ArrayList<>();
+    Map<String, Order> orderpool = new HashMap<>();
 
     public Guest(String id, double balance) {
         super(id, balance);
     }
 
     @Override
-    public void makeOrder(String destination, String pickupAddress, String phoneNumber, Date date, Car car,
-            Customer customer) {
-        // Order order = new Order();
-        // order.generateNumberOrder();
-        // order.printDetails(getFullName(), phoneNumber, destination, pickupAddress);
+    public void makeOrder(String id, int qty, LocalDate start) {
+        if (orderpool.containsKey(id)) {
+            orderpool.get(id).setQty(qty);
+            return;
+        }
+        orderpool.put(id, new Order(id, qty, start));
+
     }
 
     // public void confirmPay(int noOrder, int index) {
@@ -55,4 +59,9 @@ public class Guest extends Customer {
     // System.out.println("Pesanan Telah dibayar");
     // }
     // }
+    @Override
+    public Map<String, Order> getOrderpool() {
+        // TODO Auto-generated method stub
+        return orderpool;
+    }
 }

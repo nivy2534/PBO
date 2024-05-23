@@ -14,7 +14,7 @@ public class Order {
     double shippingCost;
     Status orderStatus;
     LocalDate start;
-    int qty;
+    int qty = 0;
     Car car;
     Customer customer;
 
@@ -22,10 +22,13 @@ public class Order {
         this.car = car.getVehicle().get(id); // ini buat ngisi car yg disini, sebenrya keknny enak pake map, soalnya
                                              // nanti kalo ada pesanan yg sama
         // tinggal panggil keynya trs tambahin qtynya, paling perlu setter buat qty
-        this.qty = qty;
+        this.qty += qty;
         this.start = start; // nah jujur ini aku bingung, kalo misalkan beda tanggal qtynya berubah atau
                             // engga
-        System.out.println(this);
+    }
+
+    public void setQty(int qty) {
+        this.qty += qty;
     }
 
     // public void generateNumberOrder() {
@@ -86,47 +89,22 @@ public class Order {
         }
     }
 
-    // public double getTotalPrice(Promotion promo){
-    // double discPrice = promo.;
-    // this.totalPrice = subprice - discPrice;
-    // return totalPrice;
-    // }
-    public void destinationPrice(String dest) {
-        // double price = 0;
-        // switch (dest) {
-        // case "Surabaya":
-        // price = 50000;
-        // break;
-        // case "Malang":
-        // price = 25000;
-        // break;
-        // case "Yogyakarta":
-        // price = 100000;
-        // break;
-        // case "Semarang":
-        // price = 100000;
-        // break;
-        // case "Jakarta":
-        // price = 150000;
-        // break;
-        // case "Bandung":
-        // price = 150000;
-        // break;
-        // default:
-        // break;
-        // }
-        // this.subprice = price * car.getChoiceqty();
+    public double getSubprice() {
+        this.subprice = qty * car.getHarga();
+        return subprice;
     }
 
     public double getTotalPrice() {
         // ini nanti kali diskon kali qty
-        return subprice;
+        return car.getHarga();
     }
 
     // ini aku nyoba buat debug, biar tau salah atau engga
     public String toString() {
         // TODO Auto-generated method stub
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        return car + " " + qty + " day " + formatter.format(start);
+        if (qty > 1) {
+            return qty + " days " + car + " " + ("UPDATE");
+        }
+        return qty + " day " + car + " " + ("NEW");
     }
 }

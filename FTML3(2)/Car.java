@@ -118,6 +118,6 @@ public class Car {
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return nama;
+        return nama + " " + noPlat;
     }
 }

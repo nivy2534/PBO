@@ -7,6 +7,7 @@ package FTml3;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -43,4 +44,14 @@ public abstract class Customer {
     // System.out.printf(" %s\n", "Nomor pesanan : " + orderPool[i].noOrder);
     // }
     // }
+
+    public abstract Map<String, Order> getOrderpool();
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }
