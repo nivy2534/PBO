@@ -202,19 +202,46 @@ public class FilkomTravel {
             System.out.printf(" No | %-26s | Dur. |  Subtotal\n", "menu");
             System.out.println("====================================================");
             DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.GERMANY);
+            double total = 0;
             df.applyPattern("#,###");
             for (Map.Entry<String, Order> a : member.getOrderpool().entrySet()) {
                 Order order = a.getValue();
                 // Format subtotal as string using DecimalFormat
                 String subtotal = df.format(order.getSubprice());
+                total += order.getSubprice();
                 System.out.printf("  %d | %-26s | %4d | %9s\n", index, order.car.toString(), order.qty, subtotal);
                 System.out.printf("      %s\n", order.start.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
                 index++;
             }
             System.out.println("====================================================");
+            System.out.printf("%-33s: %16s\n", "Sub Total", df.format(total));
+            System.out.println("====================================================");
+            System.out.printf("%-33s: %16s\n", "Total", df.format(total));
+            System.out.printf("%-33s: %16s\n", "Saldo", df.format(member.getBalance()));
         } else {
+            int index = 1;
             Guest guest = (Guest) cust;
-            // Handle guest case if necessary
+            System.out.println("Kode Pemesan: " + cust.getId());
+            System.out.println("Nama : " + "NON_MEMBER");
+            System.out.printf(" No | %-26s | Dur. |  Subtotal\n", "menu");
+            System.out.println("====================================================");
+            DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.GERMANY);
+            double total = 0;
+            df.applyPattern("#,###");
+            for (Map.Entry<String, Order> a : guest.getOrderpool().entrySet()) {
+                Order order = a.getValue();
+                // Format subtotal as string using DecimalFormat
+                String subtotal = df.format(order.getSubprice());
+                total += order.getSubprice();
+                System.out.printf("  %d | %-26s | %4d | %9s\n", index, order.car.toString(), order.qty, subtotal);
+                System.out.printf("      %s\n", order.start.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+                index++;
+            }
+            System.out.println("====================================================");
+            System.out.printf("%-33s: %16s\n", "Sub Total", df.format(total));
+            System.out.println("====================================================");
+            System.out.printf("%-33s: %16s\n", "Total", df.format(total));
+            System.out.printf("%-33s: %16s\n", "Saldo", df.format(guest.getBalance()));
         }
     }
 }
