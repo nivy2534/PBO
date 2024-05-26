@@ -5,6 +5,8 @@
 package FTml3;
 
 import java.util.Set;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,7 +17,9 @@ public class Car {
     private String noPlat;
     private String idMenu;
     private double harga;
+    private int qty = 0;
     private String customType;
+    private LocalDate start;
     private static Map<String, Car> vehicle = new HashMap<>(); // ini buat jadiin satu kendaraannya, soalnya bapaknya ga
                                                                // minta bedain
     // minta sih, tapi ga apa ya, inputnya ga bedain gitu pas di add to cart, baca
@@ -119,5 +123,28 @@ public class Car {
     public String toString() {
         // TODO Auto-generated method stub
         return nama + " " + noPlat;
+    }
+
+    public String toString2() {
+        if (qty > 1) {
+            return qty + " days " + toString() + " " + ("(UPDATE)");
+        }
+        return qty + " day " + toString() + " " + ("(NEW)");
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
+    }
+
+    public LocalDate getStart() {
+        return start;
     }
 }

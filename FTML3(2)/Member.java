@@ -15,10 +15,11 @@ import java.util.UUID;
 
 //keknya masih sama, cuman beda di makeOrder doang
 public class Member extends Customer {
-    Map<String, Order> orderpool = new HashMap<>();
-    String fullname;
-    LocalDate join;
+    private Map<String, Car> menu = new HashMap<>();
+    private String fullname;
+    private LocalDate join;
     LocalDate today = LocalDate.now();
+    Car car;
     // String password;
 
     public Member(String id, String fullName, LocalDate joindate, double balance) {
@@ -31,12 +32,22 @@ public class Member extends Customer {
         return super.getId();
     }
 
-    public void makeOrder(String id, int qty, LocalDate start) {
-        if (orderpool.containsKey(id)) {
-            orderpool.get(id).setQty(qty);
+    public void makeOrder() {
+        super.getOrderpool().add(new Order(this, super.getId()));
+    }
+
+    public void add(String id, int qty, LocalDate start) {
+        if (menu.containsKey(id)) {
+            car = menu.get(id).getVehicle().get(id);
+            car.setQty(car.getQty() + qty);
             return;
         }
-        orderpool.put(id, new Order(id, qty, start));
+        if (car.getVehicle().containsKey(id)) {
+            Car tmp = car.getVehicle().get(id);
+            tmp.setQty(qty);
+            tmp.setStart(start);
+            menu.put(id, tmp);
+        }
     }
 
     public String getFullName() {
@@ -55,8 +66,19 @@ public class Member extends Customer {
     }
 
     @Override
-    public Map<String, Order> getOrderpool() {
-        return orderpool;
+    public Map<String, Car> menu() {
+        return menu;
     }
 
+    public Map<String, Car> getMenu() {
+        return menu;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public LocalDate getJoin() {
+        return join;
+    }
 }

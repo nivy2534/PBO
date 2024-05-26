@@ -1,13 +1,19 @@
 package FTml3;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Promotion implements Comparable, Applicable {
     private String promoCode;
-    private LocalDate start, end;
+    private LocalDate start;
+    private LocalDate end;
     private double percentDisc;
     private double maxDisc;
-    private doublet minPrice;
+    private double minPrice;
+
+    private static Map<String, Promotion> promoCodes = new HashMap<>();
 
     public Promotion(String promoCode, LocalDate start, LocalDate end, double percentDisc, double maxDisc,
             double minPrice) {
@@ -23,7 +29,7 @@ public abstract class Promotion implements Comparable, Applicable {
         return promoCode;
     }
 
-    public int getMinPrice() {
+    public double getMinPrice() {
         return minPrice;
     }
 
@@ -43,7 +49,7 @@ public abstract class Promotion implements Comparable, Applicable {
         return start;
     }
 
-    public boolean isCostumerEligible(Customer x) {
+    public boolean isCustomerEligible(Customer x) {
         if (x instanceof Member) {
             if (x.getAccountAge() > 30) {
                 return true;
@@ -53,10 +59,7 @@ public abstract class Promotion implements Comparable, Applicable {
     }
 
     public boolean isMinimumPriceEligible(Order x) {
-        if (x.totalPrice > 50000) {
-            return true;
-        }
-        return false;
+        return x.getTotalPrice() > minPrice;
     }
 
     public boolean isShippingFeeEligible(Order x) {
@@ -65,5 +68,28 @@ public abstract class Promotion implements Comparable, Applicable {
 
     public int compareTo(Object o) {
         return -1;
+    }
+
+    public static void createPromo(String s, String t) {
+        String[] details = t.split("\\|");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate start = LocalDate.parse(details[1], format);
+        LocalDate end = LocalDate.parse(details[2], format);
+        switch (s) {
+            case "DISCOUNT":
+                promoCodes.put(details[0],
+                        new PercentOff(details[0], start, end,
+                                Double.parseDouble(details[3].replace("%", "")), Double.parseDouble(details[4]),
+                                Double.parseDouble(details[5])));
+                System.out.println(("CREATE PROMO SUCCESS: DISCOUNT " + details[0]));
+                break;
+            case "CASHBACK":
+                promoCodes.put(details[0],
+                        new CashBack(details[0], start, end,
+                                Double.parseDouble(details[3].replace("%", "")), Double.parseDouble(details[4]),
+                                Double.parseDouble(details[5])));
+                System.out.println(("CREATE PROMO SUCCESS: CASHBACK " + details[0]));
+                break;
+        }
     }
 }

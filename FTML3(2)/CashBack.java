@@ -1,31 +1,39 @@
 package FTml3;
 
-public class Cashback extends Promotion {
-    private double cashbackAmount;
+import java.time.LocalDate;
 
-    public Cashback(String promoCode, int minPrice, double cashbackAmount) {
-        super(promoCode, minPrice);
-        this.cashbackAmount = cashbackAmount;
+public class CashBack extends Promotion {
+    public CashBack(String promoCode, LocalDate start, LocalDate end, double percentDisc, double maxDisc,
+            double minPrice) {
+        super(promoCode, start, end, percentDisc, maxDisc, minPrice);
     }
 
-    public double getCashbackAmount() {
-        return cashbackAmount;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        if (o instanceof Cashback) {
-            Cashback other = (Cashback) o;
-            return Double.compare(this.cashbackAmount, other.cashbackAmount);
-        }
-        return 0;
-    }
-
-    protected double calculateTotalDiscount(Order order) {
+    public double calculateTotalDiscount(Order order) {
         if (isMinimumPriceEligible(order)) {
-            return cashbackAmount;
+            double cashback = order.getTotalPrice() * getPercentDisc();
+            return Math.min(cashback, getMaxDisc());
         } else {
             return 0;
         }
+    }
+
+    public boolean isCostumerEligible(Customer x) {
+        return true;
+    }
+
+    public boolean isMinimumPriceEligible(Order x) {
+        return true;
+    }
+
+    public boolean isShippingFeeEligible(Order x) {
+        return true;
+    }
+
+    public int compareTo(Object o) {
+        if (o instanceof Cashback) {
+            Cashback other = (Cashback) o;
+            return Double.compare(this.getPercentDisc(), other.getPercentDisc());
+        }
+        return 0;
     }
 }

@@ -13,20 +13,30 @@ import java.util.Scanner;
 
 //ini juga msh sama, cuman beda di makeOrder
 public class Guest extends Customer {
-    Map<String, Order> orderpool = new HashMap<>();
+    private Map<String, Car> menu = new HashMap<>();
+    Car car;
 
     public Guest(String id, double balance) {
         super(id, balance);
     }
 
     @Override
-    public void makeOrder(String id, int qty, LocalDate start) {
-        if (orderpool.containsKey(id)) {
-            orderpool.get(id).setQty(qty);
+    public void makeOrder() {
+        super.getOrderpool().add(new Order(this, super.getId()));
+    }
+
+    public void add(String id, int qty, LocalDate start) {
+        if (menu.containsKey(id)) {
+            car = menu.get(id).getVehicle().get(id);
+            car.setQty(car.getQty() + qty);
             return;
         }
-        orderpool.put(id, new Order(id, qty, start));
-
+        if (car.getVehicle().containsKey(id)) {
+            Car tmp = car.getVehicle().get(id);
+            tmp.setQty(qty);
+            tmp.setStart(start);
+            menu.put(id, tmp);
+        }
     }
 
     // public void confirmPay(int noOrder, int index) {
@@ -60,8 +70,34 @@ public class Guest extends Customer {
     // }
     // }
     @Override
-    public Map<String, Order> getOrderpool() {
+    public Map<String, Car> menu() {
         // TODO Auto-generated method stub
-        return orderpool;
+        return menu;
+    }
+
+    public Map<String, Car> getMenu() {
+        return menu;
+    }
+
+    @Override
+    public double getBalance() {
+        // TODO Auto-generated method stub
+        return super.getBalance();
+    }
+
+    @Override
+    public String getId() {
+        // TODO Auto-generated method stub
+        return super.getId();
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    @Override
+    public int getAccountAge() {
+        // TODO Auto-generated method stub
+        return super.getAccountAge();
     }
 }

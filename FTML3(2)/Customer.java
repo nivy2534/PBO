@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 //beda makerOrder doang
 public abstract class Customer {
-
+    static ArrayList<Order> orderpool = new ArrayList<>();
     private String id;
     private double balance;
     Order order;
@@ -27,7 +27,9 @@ public abstract class Customer {
         return id;
     }
 
-    public abstract void makeOrder(String id, int qty, LocalDate start);
+    public abstract void makeOrder();
+
+    public abstract void add(String id, int qty, LocalDate start);
 
     // public abstract void confirmPay(int noOrder, int index);
 
@@ -35,17 +37,7 @@ public abstract class Customer {
         return -1;
     }
 
-    // public void printOrder() {
-    // for (int i = 0; i < orderIndex; i++) {
-    // System.out.println((i + 1) + ". " + orderPool[i].destination + " - " +
-    // orderPool[i].totalPrice);
-    // System.out.printf(" %s\n", "Tanggal Keberangkatan : " +
-    // orderPool[i].departureTime);
-    // System.out.printf(" %s\n", "Nomor pesanan : " + orderPool[i].noOrder);
-    // }
-    // }
-
-    public abstract Map<String, Order> getOrderpool();
+    public abstract Map<String, Car> menu();
 
     public double getBalance() {
         return balance;
@@ -54,4 +46,14 @@ public abstract class Customer {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal += subtotal;
+    }
+
+    public static ArrayList<Order> getOrderpool() {
+        return orderpool;
+    }
+
+    public abstract Map<String, Car> getMenu();
 }

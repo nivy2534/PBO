@@ -1,28 +1,17 @@
 package FTml3;
 
-/*
-ketika dipanggil, maka akan mereturn atau memberikan fungsi diskon
-ketika inisialiasi
-PercentOff (generate ranodm String atau kode sendiri) = new PercentOff();
--> (isi) double diskon
--> harga setelah diskon akan ada di class order
+import java.time.LocalDate;
 
-*/
 public class PercentOff extends Promotion {
-    private double discountPercentage;
-
-    public PercentOff(String promoCode, int minPrice, double discountPercentage) {
-        super(promoCode, minPrice);
-        this.discountPercentage = discountPercentage;
-    }
-
-    public double getDiscountPercentage() {
-        return discountPercentage;
+    public PercentOff(String promoCode, LocalDate start, LocalDate end, double percentDisc, double maxDisc,
+            double minPrice) {
+        super(promoCode, start, end, percentDisc, maxDisc, minPrice);
     }
 
     public double calculateTotalDiscount(Order order) {
         if (isMinimumPriceEligible(order)) {
-            return order.getTotalPrice() * (discountPercentage / 100);
+            double discount = order.getTotalPrice() * getPercentDisc();
+            return Math.min(discount, getMaxDisc());
         } else {
             return 0;
         }
@@ -31,7 +20,7 @@ public class PercentOff extends Promotion {
     public int compareTo(Object o) {
         if (o instanceof PercentOff) {
             PercentOff other = (PercentOff) o;
-            return Double.compare(this.discountPercentage, other.discountPercentage);
+            return Double.compare(this.getPercentDisc(), other.getPercentDisc());
         }
         return 0;
     }

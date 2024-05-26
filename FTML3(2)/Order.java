@@ -1,8 +1,15 @@
 package FTml3;
 
+import java.lang.reflect.Array;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,23 +20,32 @@ public class Order {
     double totalPrice;
     double shippingCost;
     Status orderStatus;
-    LocalDate start;
-    int qty = 0;
     Car car;
-    Customer customer;
+    ArrayList<Map> orderMenu = new ArrayList<>();
 
-    public Order(String id, int qty, LocalDate start) {
-        this.car = car.getVehicle().get(id); // ini buat ngisi car yg disini, sebenrya keknny enak pake map, soalnya
-                                             // nanti kalo ada pesanan yg sama
-        // tinggal panggil keynya trs tambahin qtynya, paling perlu setter buat qty
-        this.qty += qty;
-        this.start = start; // nah jujur ini aku bingung, kalo misalkan beda tanggal qtynya berubah atau
-                            // engga
+    // public Order(String id, int qty, LocalDate start) {
+    // this.car = car.getVehicle().get(id); // ini buat ngisi car yg disini,
+    // sebenrya keknny enak pake map, soalnya
+    // // nanti kalo ada pesanan yg sama
+    // // tinggal panggil keynya trs tambahin qtynya, paling perlu setter buat qty
+    // this.qty += qty;
+    // this.start = start; // nah jujur ini aku bingung, kalo misalkan beda tanggal
+    // qtynya berubah atau
+    // // engga
+    // this.orderStatus = Status.UNPAID;
+    // }
+
+    public Order(Customer cust, String id) {
+        this.orderStatus = Status.UNPAID;
+        if (cust instanceof Member) {
+            Member member = (Member) cust;
+            orderMenu.add(member.getMenu());
+        }
     }
 
-    public void setQty(int qty) {
-        this.qty += qty;
-    }
+    // public void setQty(int qty) {
+    // this.qty += qty;
+    // }
 
     // public void generateNumberOrder() {
     // Random rand = new Random();
@@ -40,40 +56,51 @@ public class Order {
         LocalDate today = LocalDate.now();
         this.dateOrder = today;
         pay();
-        printDetails();
+        // printDetails();
     }
 
-    public void printDetails() {
-        // if (orderStatus == Status.UNPAID) {
-        // System.out.println("=============================================================");
-        // System.out.println();
-        // System.out.println("Nama: " + customer.getFullName());
-        // System.out.println("Nomor HP: " + phoneNumber);
-        // // System.out.println("Nomor pesanan: " + noOrder);
-        // System.out.println("Alamat penjemputan: " + pickupAddress);
-        // System.out.println("Tujuan : " + destination);
-        // System.out.println("Harga pesanan : " + subprice);
-        // System.out.println("=============================================================");
-        // } else {
-        // System.out.println("Tanggal Checkout : " + dateOrder);
-        // System.out.printf("%s%s\n", "No. Order : ", noOrder);
-        // System.out.printf("%s%s\n", "Status : ", orderStatus);
-        // System.out.println("Tipe akun : " + ((customer instanceof Member) ? "Member"
-        // : "Guest"));
-        // System.out.println("=============================================================");
-        // System.out.println();
-        // System.out.println("Nama: " + customer.getFullName());
-        // System.out.println("Nomor HP: " + phoneNumber);
-        // System.out.println("Nomor pesanan: " + noOrder);
-        // System.out.println("Alamat penjemputan: " + pickupAddress);
-        // car.printInfo();
-        // System.out.println("Kursi pesanan : " + car.getChoiceqty());
-        // System.out.println("Tujuan : " + destination);
-        // System.out.println("Harga pesanan : " + getTotalPrice());
-        // System.out.println("=============================================================");
-        // }
+    // public String printDetails(Customer cust, String customerId, double balance)
+    // {
+    // DecimalFormat df = (DecimalFormat)
+    // NumberFormat.getNumberInstance(Locale.GERMANY);
+    // df.applyPattern("#,###");
+    // String subtotal = df.format(getSubprice());
+    // cust.setSubtotal(getSubprice());
+    // String s = String.format(" %-26s | %4d | %9s\n %s", car.toString(), qty,
+    // subtotal, start);
+    // return s;
+    // }
 
-        // System.out.println("Mobil: Avanza putih dengan plat N 1234 O");
+    public void printDetails2(Customer cust) {
+        int index = 1;
+        System.out.println("Kode Pemesan: " + cust.getId());
+        System.out.println("Nama : " + (cust instanceof Member ? ((Member) cust).getFullName() : "NON_MEMBER"));
+        if (orderStatus.equals(Status.SUCCESSFULL)) {
+            System.out.println("Nomor Pesanan: " + cust.getOrderpool().indexOf(this));
+            System.out.println("Tanggal Pemesanan: ");
+        }
+        System.out.printf("%3s | %-25s | %3s | %8s\n", "No", "Menu", "Dur.", "Subtotal");
+        System.out.println("====================================================");
+
+        DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.GERMANY);
+        df.applyPattern("#,###");
+        double Subtotal = 0;
+        for (Map.Entry<String, Car> a : cust.getMenu().entrySet()) {
+            Car car = a.getValue();
+            double tmp = car.getHarga() * car.getQty();
+            String subtotal = df.format(tmp);
+            Subtotal += tmp;
+            System.out.printf("%3d | %-25s | %4d | %8s \n", index, car.toString(), car.getQty(), subtotal);
+            System.out.println("      " + car.getStart() + " - " + car.getStart().plus(Period.ofDays(car.getQty())));
+            index++;
+        }
+
+        System.out.println("====================================================");
+        System.out.printf("%-32s: %15s\n", "Sub Total", df.format(Subtotal));
+        System.out.println("====================================================");
+        System.out.printf("%-32s: %15s\n", "Total", df.format(Subtotal));
+        System.out.printf("%-32s: %15s\n", "Saldo", df.format((cust.getBalance())));
+
     }
 
     // public void applyPromo(Promotion x) {
@@ -100,11 +127,11 @@ public class Order {
     }
 
     // ini aku nyoba buat debug, biar tau salah atau engga
-    public String toString() {
-        // TODO Auto-generated method stub
-        if (qty > 1) {
-            return qty + " days " + car + " " + ("UPDATE");
-        }
-        return qty + " day " + car + " " + ("NEW");
-    }
+    // public String toString() {
+    // // TODO Auto-generated method stub
+    // if (qty > 1) {
+    // return qty + " days " + car + " " + ("UPDATE");
+    // }
+    // return qty + " day " + car + " " + ("NEW");
+    // }
 }
